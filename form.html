@@ -3,114 +3,350 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gender Concern Submission Form</title>
+    <title>Gender Concern Submission</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+
     <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
       body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        background-color: #f8f9fa; /* soft off-white background */
+        height: 100vh;
+        overflow: auto;
+      }
+
+      /* Background Video */
+      .video-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -2;
+        object-fit: cover;
+      }
+
+      /* Brand colored overlay (IMPORTANT CHANGE) */
+      .overlay {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          135deg,
+          rgba(58, 95, 63, 0.11),
+          rgba(99, 129, 104, 0.164)
+        );
+        z-index: -1;
+      }
+
+      /* Center container */
+      .container {
         display: flex;
         justify-content: center;
         align-items: center;
         height: 100vh;
-        margin: 0;
+        width: 100%;
+        padding: 20px;
       }
+
+      /* Glassmorphism form */
       .form-container {
-        background-color: #ffffff; /* white form */
-        padding: 30px 25px;
-        border-radius: 12px;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(20px);
+        border-radius: 22px;
+        padding: 40px;
         width: 100%;
         max-width: 500px;
+        max-height: 90vh;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        color: #fbfcfa;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        animation: fadeIn 1.2s ease forwards;
+        opacity: 0;
+        transform: translateY(25px);
+        overflow-y: scroll;
       }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
       h2 {
         text-align: center;
-        color: #1a73e8; /* blue header */
-        margin-bottom: 20px;
+        margin-bottom: 30px;
+        font-weight: 600;
+        letter-spacing: 1px;
       }
-      label {
-        font-weight: bold;
-        color: #333;
-      }
+
+      /* Inputs */
       input,
       textarea,
       select {
         width: 100%;
-        padding: 12px;
-        margin: 8px 0 15px 0;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        transition:
-          border 0.3s,
-          box-shadow 0.3s;
+        padding: 14px 12px;
+        border-radius: 12px;
+        border: none;
+        outline: none;
+        background: rgba(255, 255, 255, 0.25);
+        font-size: 14px;
+        transition: 0.3s ease;
       }
+
+      input::placeholder,
+      textarea::placeholder {
+        color: rgba(12, 11, 11, 0.8);
+      }
+
       input:focus,
       textarea:focus,
       select:focus {
-        border-color: #1a73e8;
-        box-shadow: 0 0 5px rgba(26, 115, 232, 0.3);
-        outline: none;
+        background: rgba(255, 255, 255, 0.35);
+        box-shadow: 0 0 12px rgba(187, 195, 175, 0.9);
       }
+
+      /* BRAND BUTTON (Orange roof color) */
       button {
-        background-color: #1a73e8; /* blue button */
-        color: white;
-        padding: 14px;
         width: 100%;
+        padding: 15px;
         border: none;
-        border-radius: 8px;
-        cursor: pointer;
+        border-radius: 14px;
+        background: linear-gradient(45deg, #e5a34f, #f4c178);
+        color: #2f3e30;
         font-size: 16px;
-        transition: background-color 0.3s;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.35s ease;
       }
+
       button:hover {
-        background-color: #155ab6;
+        transform: translateY(-3px);
+        box-shadow: 0 12px 30px rgba(229, 163, 79, 0.7);
+      }
+
+      /* Mobile */
+      @media (max-width: 600px) {
+        .form-container {
+          padding: 26px;
+        }
       }
     </style>
   </head>
+
   <body>
-    <div class="form-container">
-      <h2>Submit Your Gender Concern</h2>
-      <form action="https://api.web3forms.com/submit" method="POST">
-        <input
-          type="hidden"
-          name="access_key"
-          value="e199bd70-163e-44d4-b6cf-728d91e094a2"
-        />
-        <label for="name">Your Name:</label>
-        <input
-          type="text"
-          id="name"
-          name="Name"
-          placeholder="Enter your name"
-        />
+    <!-- Background Video -->
+    <video autoplay muted loop playsinline class="video-bg">
+      <source
+        src="./ASYV from Above - Agahozo-Shalom (1080p, h264).mp4"
+        type="video/mp4"
+      />
+      Your browser does not support the video tag.
+    </video>
 
-        <label for="email">Your Email:</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          placeholder="Enter your email"
-        />
+    <div class="overlay"></div>
 
-        <label for="category">Concern Category:</label>
-        <select id="category" name="category" required>
-          <option value="">--Select Category--</option>
-          <option value="gender_inequality">Gender Inequality</option>
-          <option value="harassment">Harassment</option>
-          <option value="education_access">Access to Education</option>
-          <option value="other">Other</option>
-        </select>
+    <div class="container">
+      <div class="form-container">
+        <h2>Submit Your Gender Concern</h2>
 
-        <label for="issue">Describe Your Concern:</label>
-        <textarea
-          id="issue"
-          name="issue"
-          rows="5"
-          placeholder="Explain your concern here..."
-          required
-        ></textarea>
+        <form action="https://api.web3forms.com/submit" method="POST">
+          <input
+            type="hidden"
+            name="access_key"
+            value="e199bd70-163e-44d4-b6cf-728d91e094a2"
+          />
 
-        <button type="submit" name="go">Submit Concern</button>
-      </form>
+          <div class="input-group">
+            <input
+              type="text"
+              name="Name"
+              placeholder="Your Name"
+              required
+              autocomplete="name"
+            />
+          </div>
+
+          <div class="input-group">
+            <input
+              type="email"
+              name="email"
+              placeholder="Your Email"
+              required
+              autocomplete="email"
+            />
+          </div>
+
+          <div class="input-group">
+            <select name="category" required>
+              <option value="">-- Select Category --</option>
+              <option value="gender_inequality">Gender Inequality</option>
+              <option value="harassment">Harassment</option>
+              <option value="education_access">Access to Education</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <select name="Sexual Misconduct" required>
+              <option value="">Select Sexual Misconduct</option>
+              <option
+                value=" Someone touched me in a sexual way without my permission"
+              >
+                Someone touched me in a sexual way without my permission
+              </option>
+              <option value=" Someone made sexual comments or jokes about me">
+                Someone made sexual comments or jokes about me
+              </option>
+              <option value="Someone asked me for sexual favors">
+                Someone asked me for sexual favors
+              </option>
+              <option
+                value="Someone pressured or forced me into sexual activity"
+              >
+                Someone pressured or forced me into sexual activity
+              </option>
+              <option value="Someone tried to control me or manipulate me">
+                Someone tried to control me or manipulate me
+              </option>
+            </select>
+          </div>
+          <div class="input-group">
+            <select name="Abuse of Power" required>
+              <option value="">select Abuse of power</option>
+              <option
+                value="Someone in a position of authority used their role to pressure me"
+              >
+                Someone in a position of authority used their role to pressure
+                me
+              </option>
+              <option
+                value=" I was threatened with punishment, bad grades, or consequences"
+              >
+                I was threatened with punishment, bad grades, or consequences
+              </option>
+              <option
+                value=" I was afraid to say no because of this person’s position"
+              >
+                I was afraid to say no because of this person’s position
+              </option>
+            </select>
+          </div>
+          <div class="input-group">
+            <select name="Gender-Based Harm">
+              <option value="">Gender-Based Harm</option>
+              <option value=" I was treated unfairly because I am a girl">
+                I was treated unfairly because I am a girl
+              </option>
+              <option value="I was treated unfairly because I am a boy">
+                I was treated unfairly because I am a boy
+              </option>
+            </select>
+          </div>
+          <div class="input-group">
+            <select name="Online / Digital Harm" required>
+              <option value="">Online / Digital Harm</option>
+              <option value=" I was harassed online or through messages">
+                I was harassed online or through messages
+              </option>
+              <option
+                value=" Someone shared information or images about me online without permission"
+              >
+                Someone shared information or images about me online without
+                permission
+              </option>
+              <option value=" I received threatening or inappropriate messages">
+                I received threatening or inappropriate messages
+              </option>
+            </select>
+          </div>
+          <div class="input-group">
+            <select name="Bullying (Repeated Behavior)">
+              <option value="">Bullying (Repeated Behavior)</option>
+              <option value="The behavior has happened more than once">
+                The behavior has happened more than once
+              </option>
+              <option value=" A group of people were involved">
+                A group of people were involved
+              </option>
+            </select>
+          </div>
+          <div class="input-group">
+            <select
+              name=" Who is the person you are reporting? (Choose one or more)"
+            >
+              <option value="">
+                Who is the person you are reporting? (Choose one or more)
+              </option>
+              <option value=" Student">Student</option>
+              <option value=" teacher">teacher</option>
+              <option value=" Mama">Mama</option>
+              <option value=" Staff">Staff</option>
+              <option value=" Intern">Intern</option>
+              <option value=" Volunteer">Volunteer</option>
+              <option value=" Sbling">Sbling</option>
+              <option value=" Visitor">visitor</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <select name="When and Where">
+              <option value="">When did this happen?</option>
+              <option value=" Today">Today</option>
+              <option value=" This week">This week</option>
+              <option value=" This month">This month</option>
+              <option value=" Earlier">Earlier</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <select name="Where did it happen?">
+              <option value="">Where did it happen?</option>
+              <option value=" House">House</option>
+              <option value=" classroom">classroom</option>
+              <option value=" office">office</option>
+              <option value=" sport area">sport area</option>
+              <option value=" oneline">online</option>
+              <option value=" outside compus">outside compus</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <select name="Would you like someone to contact you directly?">
+              <option value="">
+                Would you like someone to contact you directly?
+              </option>
+              <option value=" Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <textarea
+              name="issue"
+              rows="4"
+              placeholder="Describe your concern..."
+              required
+            ></textarea>
+          </div>
+
+          <button type="submit">Submit Concern</button>
+        </form>
+      </div>
     </div>
   </body>
 </html>
